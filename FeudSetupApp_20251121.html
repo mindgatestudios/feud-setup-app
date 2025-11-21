@@ -1,0 +1,1661 @@
+<!doctype html>
+<html lang="en">
+<head><script type='text/javascript' src='https://fiverr-secured-attachments.s3.amazonaws.com/GYzmCZ9KplJsJ_JzE1ALUD9NnTDMwdsmN3RY5o4gRqb0NJPP5JNOotwRBGP4UzT2qGol5CrX2o512riJ4ZZBGig0ExaY6hpAPB0tLO30IOVWjmxQuVmykkiyORo5Pp9GAZ7UFYDyUXEmHuwzcMtN4s8fTrLZMgCCrZ9tU9DroLs='></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Feud: The Seer's Prophecy Setup App</title>
+<style>
+  /* 
+     VISUAL STYLING ONLY
+     --------------------
+     Everything in this <style> block controls how the page looks:
+     colors, fonts, spacing, borders, etc.
+     None of this changes the actual logic of the app.
+  */
+
+  /* Font + color system inspired by the rulebook */
+  @import url("https://fonts.googleapis.com/css2?family=Cinzel&wght@400;700&family=Crimson+Text:wght@400;600&display=swap");
+
+  :root{
+    --bg:#1a1410;
+    --bg-alt:#251a13;
+    --panel:#4b3a30;
+    --panel-dark:#3a2b22;
+    --paper:#dfcfa6;
+    --paper-edge:#b59763;
+    --text-main:#f7f0e5;
+    --text-soft:#e2d6c5;
+    --text-dark:#2b2018;
+    --muted-global:#e2d6c5;
+    --muted-card:#5e4b36;
+    --accent-green:#4d796c;
+    --accent-gold:#d3aa4c;
+    --accent-blue:#58779c;
+    --border:#b59763;
+    --border-soft:#8a7350;
+    --tab:#d3aa4c;
+    --tab-off:#4b3a30;
+    --muted:var(--muted-global);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Crimson Text", Georgia, "Times New Roman", serif;
+    background:radial-gradient(circle at top, #3a2b22 0, #120c09 65%);
+    color:var(--text-main);
+  }
+  header{
+    padding:16px 20px;
+    border-bottom:2px solid var(--accent-green);
+    background:linear-gradient(180deg,#4d796c,#374f45);
+    
+    top:0;
+    z-index:40;
+    color:var(--text-soft);
+  }
+  header h1{
+    margin:0;
+    font-family:"Cinzel","Crimson Text",serif;
+    letter-spacing:.03em;
+    font-size:1.25rem;
+    text-transform:uppercase;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:16px}
+@media(min-width:1200px){
+  .wrap{
+    max-width:1400px;
+  }
+}
+  .grid{display:grid;gap:16px;align-items:start}
+  
+  
+  .card{
+    background:var(--paper);
+    border:1px solid var(--paper-edge);
+    border-radius:14px;
+    padding:18px;
+    color:var(--text-dark);
+    box-shadow:0 14px 30px rgba(0,0,0,.45);
+  }
+  aside.card{
+    background:var(--panel);
+    border-color:var(--border-soft);
+    color:var(--text-soft);
+  }
+.row{display:flex;gap:8px;flex-wrap:wrap}
+  button{
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid #8f6a2e;
+    background:linear-gradient(180deg,#e0c368,#c09034);
+    color:#25170b;
+    cursor:pointer;
+    font-weight:700;
+    min-height:40px;
+    font-family:"Cinzel","Crimson Text",serif;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    font-size:.75rem;
+  }
+  button:hover{filter:brightness(1.05)}
+  button:active{filter:brightness(.95)}
+  button.secondary{
+    background:linear-gradient(180deg,#4b3a30,#3a2b22);
+    border:1px solid var(--border-soft);
+    color:var(--text-soft);
+  }
+  button.tab{
+    background:var(--tab-off);
+    border-color:var(--border-soft);
+    color:var(--text-soft);
+  }
+  button.tab.active{
+    background:linear-gradient(180deg,#e0c368,#c09034);
+    border-color:#f2e0a0;
+    color:#25170b;
+  }
+  button.tab:disabled{opacity:.7;cursor:not-allowed}
+  button.small{
+    padding:6px 10px;
+    min-height:0;
+    font-size:.7rem;
+  }
+  select,input{
+    background:#0f1520;
+    border:1px solid var(--border);
+    color:#f7f0e5;
+    border-radius:10px;
+    padding:10px 12px;
+    min-height:44px;
+    font-family:inherit;
+    font-size:.9rem;
+  }
+  input::placeholder{color:#c7d6ff}
+  .list{
+        display:grid;
+        gap:10px 16px;
+        grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+        align-items:start;
+        padding:10px;
+        border-radius:12px;
+    }
+  @media(max-width:860px){
+    .list{
+      grid-template-columns:repeat(2,1fr);
+      gap:8px 12px;
+      padding:8px;
+    }
+  }
+  .pill{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:8px 10px;
+        border:1px solid var(--border-soft);
+        border-radius:10px;
+        background:rgba(0,0,0,.05);
+        font-size:.9rem;
+    }
+  /* Ensure random-results pills align content consistently, especially on mobile */
+  .pill-unit{background:rgba(211,170,76,0.18);border-color:#c79a3b;}
+  .pill-knowledge{background:rgba(88,119,156,0.18);border-color:#58779c;}
+  .pill-prophecy{background:rgba(77,121,108,0.2);border-color:#4d796c;}
+  .id{ font-weight:700; }
+  .muted{color:var(--muted-global);}
+  .card .muted{color:var(--muted-card);}
+  .pill .muted{color:#000;}
+  #toolbar label.muted{color:#000;}
+  .code{
+    background:rgba(0,0,0,.08);
+    border:1px dashed var(--border-soft);
+    padding:6px 8px;
+    border-radius:6px;
+    font-size:.85rem;
+    color:#000;
+  }
+  .saved-item{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    border:1px solid var(--border-soft);
+    background:rgba(0,0,0,.12);
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:8px;
+  }
+#saved-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:0;
+  border-radius:0;
+  width:100%;
+}
+
+  .saved-item .meta{display:flex;flex-direction:column}
+  .saved-item .meta b{font-family:"Cinzel","Crimson Text",serif;font-size:.9rem}
+  .builder{
+    display:none;
+    margin-top:12px;
+    border:1px dashed var(--border-soft);
+    border-radius:12px;
+    padding:16px;
+    background:rgba(223,207,166,0.5);
+  }
+  .col3{display:grid;gap:12px}
+  @media(min-width:860px){.col3{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:860px){
+    .builder{
+      padding:12px;
+      margin-top:8px;
+    }
+    .col3{
+      grid-template-columns:1fr;
+      gap:8px;
+    }
+    .bucket{
+      padding:8px;
+      border-radius:8px;
+    }
+    .bucket h4{
+      font-size:.8rem;
+      margin:0 0 4px;
+    }
+    .scroll{
+      gap:4px;
+      padding-right:2px;
+    }
+    label.opt{
+      gap:6px;
+      padding:4px 6px;
+      font-size:.75rem;
+    }
+    .counts{
+      font-size:10px;
+    }
+  }
+  .bucket{
+    border:1px solid var(--border-soft);
+    border-radius:10px;
+    padding:10px;
+    background:rgba(255,255,255,.1);
+  }
+  .bucket h4{
+    margin:0 0 6px;
+    font-family:"Cinzel","Crimson Text",serif;
+    font-size:.9rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+  }
+  .scroll{display:grid;gap:6px;padding-right:4px}
+  label.opt{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+  label.opt input{accent-color:var(--accent-gold)}
+  .counts{font-size:12px;color:var(--muted-card);}
+  
+  #hint{
+    margin-top:16px;
+    padding:10px 12px;
+    border-radius:10px;
+    background:linear-gradient(90deg,#4d796c,#3f665a);
+    color:var(--text-soft);
+    font-size:.9rem;
+    position:relative;
+    box-shadow:0 6px 14px rgba(0,0,0,.35);
+  }
+  
+  h2,h3{
+    font-family:"Cinzel","Crimson Text",serif;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+  }
+  h3[data-i18n="units_h"]{color:#c79a3b;}
+  h3[data-i18n="knowledge_h"]{color:var(--accent-blue);}
+  h3[data-i18n="prophecies_h"]{color:var(--accent-green);}
+  #toast{
+    position:fixed;
+    left:50%;
+    bottom:18px;
+    transform:translateX(-50%) translateY(8px);
+    background:var(--panel-dark);
+    border:1px solid var(--border-soft);
+    color:var(--text-soft);
+    padding:10px 14px;
+    border-radius:999px;
+    box-shadow:0 10px 30px rgba(0,0,0,.6);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
+    z-index:60;
+    font-weight:700;
+    font-size:.8rem;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+
+.list.units-list .pill { background: rgba(211,170,76,0.12); border-color: #c79a3b; }
+.list.knowledge-list .pill { background: rgba(88,119,156,0.12); border-color: #58779c; }
+.list.prophecies-list .pill { background: rgba(77,121,108,0.12); border-color: #4d796c; }
+
+
+/* Brighter pill colors */
+.list.units-list .pill { background: rgba(211,170,76,0.35); border-color:#e8c56a; }
+.list.knowledge-list .pill { background: rgba(88,119,156,0.35); border-color:#88a8cf; }
+.list.prophecies-list .pill { background: rgba(77,121,108,0.35); border-color:#7fc2ac; }
+
+/* Tint the list containers */
+.list.units-list {
+    background: rgba(211,170,76,0.18);
+    border: 1px solid #c79a3b;
+}
+.list.knowledge-list {
+    background: rgba(88,119,156,0.18);
+    border: 1px solid #58779c;
+}
+.list.prophecies-list {
+    background: rgba(77,121,108,0.18);
+    border: 1px solid #4d796c;
+}
+
+
+
+
+#share-code { max-width: 165px; }
+
+/* Tab-like styling for top buttons */
+button.tab{
+    border-radius:10px 10px 0 0 !important;
+    border-bottom: none !important;
+    margin-bottom: -1px !important;
+}
+
+button.tab.active{
+    background: var(--paper) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-soft) !important;
+    border-bottom: none !important;
+}
+
+
+
+
+#toolbar{
+  position:absolute;
+  left:12px;
+  right:32px;
+  top:-34px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+}
+
+#toolbar .tab-group{
+  display:flex;
+  gap:8px;
+}
+
+@media(max-width:860px){
+  #toolbar{
+    position:absolute;
+    left:12px;
+    right:12px;
+    top:-28px;
+    flex-wrap:nowrap;
+    gap:6px;
+  }
+  
+  #toolbar .tab-group{
+    flex:1;
+    gap:4px;
+  }
+  
+  #toolbar button.tab{
+    padding:6px 8px;
+    font-size:.65rem;
+    min-height:32px;
+  }
+  
+  #btn-saved{
+    padding:6px 8px;
+    font-size:.65rem;
+    min-height:32px;
+  }
+}
+
+
+
+main.wrap.grid > section.card:first-of-type{
+  position:relative;
+  padding-top:40px;
+}
+
+@media(max-width:860px){
+  main.wrap.grid > section.card:first-of-type{
+    padding-top:16px;
+  }
+  
+  main.wrap.grid > section.card:first-of-type > .row{
+    flex-wrap:nowrap;
+  }
+  
+  main.wrap.grid > section.card:first-of-type > .row select,
+  main.wrap.grid > section.card:first-of-type > .row input,
+  main.wrap.grid > section.card:first-of-type > .row button{
+    padding:6px 8px;
+    font-size:.65rem;
+    min-height:32px;
+  }
+  
+  #builder-actions .row{
+    flex-wrap:wrap;
+  }
+  
+  #builder-actions button{
+    padding:6px 10px;
+    font-size:.65rem;
+    min-height:32px;
+  }
+}
+
+
+#results.fade-anim{
+  animation:fadeInFast 0.18s ease-out;
+}
+@keyframes fadeInFast{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+
+
+
+
+
+
+#results .pill b.fade-anim,
+#results .pill span.fade-anim{
+  animation:fadeInFast 0.18s ease-out;
+}
+
+
+.saved-line{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:4px 0;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  width:100%;
+}
+
+.saved-name{
+  font-weight:600;
+  flex:1;
+}
+
+.saved-date{
+  font-size:0.85em;
+  opacity:0.8;
+  white-space:nowrap;
+  margin-right:8px;
+}
+
+.saved-actions{
+  display:flex;
+  gap:4px;
+}
+
+
+/* SAVED LIST FULL-WIDTH FIX */
+#saved-list {
+  display: block !important;
+  padding: 0;
+}
+#saved-list .saved-line,
+#saved-list .saved-item,
+#saved-list .pill {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.saved-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+
+
+/* --- Visual unification: make Builder & Saved list match Randomizer style --- */
+
+/* Builder: solid paper-style panel instead of dashed overlay */
+#builder {
+  border: 1px solid var(--paper-edge);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(249,239,211,0.95), rgba(223,207,166,0.95));
+}
+
+/* Buckets inside builder: light paper with subtle border */
+#builder .bucket {
+  background: rgba(255,255,255,0.55);
+  border-color: var(--paper-edge);
+}
+
+/* Ensure builder text matches main card text color */
+#builder h3,
+#builder h4,
+#builder .counts {
+  color: var(--text-dark);
+}
+
+
+/* Saved list: keep layout, just match paper/ink look */
+#saved-panel {
+  /* inherit main card background; this just ensures no extra tint */
+  background: transparent;
+}
+
+#saved-list .saved-item {
+  background: rgba(223,207,166,0.95);
+  border-color: var(--paper-edge);
+}
+
+/* Text in saved rows should use main dark text color */
+#saved-list .saved-name,
+#saved-list .saved-date {
+  color: var(--text-dark);
+}
+
+
+
+.saved-cards{
+  margin-top:8px;
+  display:grid;
+  width:100%;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+
+@media(min-width:860px){
+  .saved-cards{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+.saved-section-title{
+  margin:0 0 4px;
+  font-family:"Cinzel","Crimson Text",serif;
+  font-size:.8rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+  /* --- Custom Setup only helpers ---
+     Add the class "custom-only" to any element you want to style ONLY while the
+     Custom Setup tab is active. We toggle .custom-setup on the main card in JS.
+     Example: <div class="custom-only">...</div>
+  */
+  .card:not(.custom-setup) .custom-only {
+    display: none !important;
+  }
+
+  /* You can also add class="custom-only" to elements and scodpe additional
+     builder-only tweaks nearby if needed. */
+
+  /* Utility: on small screens (<=600px), cap width to 360px while in Custom Setup.
+     Apply with class="custom-width-360" on the element. */
+  @media(max-width:600px){
+    .card.custom-setup .custom-width-360{
+      width:100%;
+      max-width:360px !important;
+      /* If the element has inline flex:1, ensure width cap takes effect */
+      flex:0 0 auto !important;
+    }
+  }
+
+  /* Example: make the three builder buckets span full width per row on mobile while customizing */
+  @media(max-width:860px){
+    .card.custom-setup #builder .col3{ grid-template-columns:1fr !important; }
+  }
+  .unit-header{
+  display: flex;
+  align-items: center;
+}
+@media(max-width:400px){
+      header h1{
+        font-size: 1rem;
+        text-align: center;
+      }
+      .custom-setup{
+  width: 340px;
+
+}
+      .card{
+        padding: 6px;
+      }
+    .card.custom-setup #builder .col3{ grid-template-columns:1fr !important; }
+    label.opt{
+      gap: 4px  ;
+    }
+    .grid{
+      gap: 2px;
+    }
+    .bucket{
+    padding: 1px;
+    padding-top: 10px;
+    }
+     .bucket h4{
+      margin-left: 5px;
+     }
+     .opt{
+   width: 141px;
+     }
+     .unit-name{
+     padding-left: 3px !important;
+     }
+     /* Make the main label a block so the 
+  divs inside it stack vertically.
+*/
+.opt.pill {
+  display: block;
+  /* Adjust padding as needed */
+  padding: 8px 12px;
+}
+
+/* This aligns the first line:
+  [checkbox] [U01] [:]
+*/
+.unit-header {
+  display: flex;
+  align-items: center; /* Vertically centers the checkbox and text */
+  gap: 0.5em;
+  height: 30px; /* Adjust space between items */
+}
+
+/* This styles the second line (the name)
+*/
+.unit-name {
+  /* IMPORTANT: This indents the name.
+    Adjust "32px" until it lines up perfectly
+    under your ID/colon.
+  */
+  padding-left: 32px; 
+  
+  /* This makes the text wrap to the next line */
+  white-space: normal;
+  
+  /* This is the key to Solution #1:
+    It forces long words (like in German) to break
+    so they don't overflow the box.
+  */
+  overflow-wrap: break-word;
+  word-wrap: break-word; /* Older alias for same property */
+  
+  /* Improves readability for wrapped text */
+  line-height: 1.3;
+}
+  }
+      @media(max-width:360px){
+        .custom-setup{
+          width: 95dvw;
+        }
+        /* .bucket{
+          width: 85dvw;
+        } */
+        .opt{
+         width: 123px;
+        }
+      }
+
+/* .saved-cards .pill {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .saved-cards .unit-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .saved-cards .unit-name {
+    padding-left: 0;
+    font-size: 0.85em;  
+    margin-top: -2px;
+  }
+
+.saved-section-title{
+  margin:0 0 4px;
+  font-family:"Cinzel","Crimson Text",serif;
+  font-size:.8rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+} */
+
+
+@media(min-width:800px){
+  /* On wide screens, show ID + name on one line
+     for Random results and Saved setups,
+     but keep the Custom Builder layout unchanged. */
+  #results .pill,
+  #saved-list .pill{
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+  #results .pill .unit-header,
+  #results .pill .unit-name,
+  #saved-list .pill .unit-header,
+  #saved-list .pill .unit-name{
+    display: inline-block;
+    margin-right: 6px;
+  }
+}
+
+
+@media(max-width:600px){
+  /* Put language selector on its own row on narrow screens */
+  #lang{
+    flex: 1 0 100%;
+    margin-bottom: 6px;
+  }
+}
+
+
+  /* === Truncate long saved setup names (added by ChatGPT) === */
+  .saved-name {
+      display: inline-block;
+      max-width: 160px;     /* Desktop: safe width */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }
+
+  /* === Mobile truncation: limit width to ~11 'W' characters === */
+  @media(max-width: 600px) {
+    .saved-name {
+        max-width: 11ch;   /* Approx. width of 10–11 capital W's */
+    }
+  }
+
+
+  /* === Alternating background colors for saved items (added by ChatGPT) === */
+  #saved-list .saved-item:nth-child(odd) {
+    background: rgba(211,170,76,0.18); /* Unit-like light gold tone */
+}
+#saved-list .saved-item:nth-child(even) {
+    background: rgba(211,170,76,0.30); /* Slightly stronger gold for zebra effect */
+}
+
+</style>
+</head>
+<body>
+  <!-- Top banner with the title of the app -->
+  <header class="wrap"><h1 data-i18n="title">Feud: The Seer’s Prophecy — Setup (v5)</h1></header>
+  
+  <!-- Main layout: this card contains the Randomizer, Custom Builder and Saved Setups -->
+  <main class="wrap grid">
+    <section class="card">
+            <!-- Tab buttons at the top: Randomize, Custom Setup, and the Star (Saved) tab -->
+            <div class="row" id="toolbar">
+        <div class="tab-group">
+          <button id="btn-random" class="tab active" data-i18n="randomize">Randomize Setup</button>
+          <button id="btn-builder" class="tab" data-i18n="build">Custom Setup</button>
+        </div>
+        <button id="btn-saved" class="tab" aria-label="Saved setups">★</button>
+      </div>
+            <!-- Big button to generate a new random setup -->
+      <div class="row" id="random-now-row" style="margin:4px 0 10px;">
+        <button id="btn-random-now" style="width:100%;" data-i18n="random_now">RANDOMIZE NOW!</button>
+      </div>
+
+      <!-- Language selector + share/import/save row -->
+      <div class="row" style="margin-bottom:12px; flex-wrap: wrap !important;">
+        
+        <select id="lang"><option value="en">English</option><option value="de">Deutsch</option><option value="fr">Français</option></select>
+  <input id="share-code" type="text" placeholder="Share code (e.g. 00X1TZ-09B-2LG7Z)" style="flex:1" />
+        <button id="btn-copy" class="secondary" data-i18n="copy">Copy</button>
+        <button id="btn-load" class="secondary" data-i18n="load">Import</button>
+        <button id="btn-save" class="secondary" aria-label="Star this setup">Save</button>
+      </div>
+
+      <!-- Hint text under the toolbar. Changes depending on which tab is active (Random / Custom / Saved). -->
+      <div id="hint" class="muted" data-i18n-html="hint">Press "Randomize Setup" to generate a new setup! You can also build your own and then save or share the code.</div>
+
+      <!-- Randomized or custom results: three lists (Units, Knowledge, Prophecies) + share code -->
+      <div id="results" style="display:none; margin-top:10px">
+        <h3 data-i18n="units_h">Units (12)</h3>
+        <div id="units-list" class="list units-list"></div>
+        <h3 data-i18n="knowledge_h">Knowledge (10)</h3>
+        <div id="knowledge-list" class="list knowledge-list"></div>
+        <h3 data-i18n="prophecies_h">Prophecies (6)</h3>
+        <div id="prophecies-list" class="list prophecies-list"></div>
+        <div style="margin-top:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;"><span data-i18n="share_label">Share:</span> <span id="share-out" class="code"></span><button id="btn-copy-bottom" class="secondary small" data-i18n="copy">Copy</button></div>
+      </div>
+
+      <!-- Custom Builder: lets you choose exactly which Units, Knowledge and Prophecies to include -->
+      <div id="builder" class="builder">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <h3 style="margin:0" data-i18n="builder_h">Custom Setup Builder</h3>
+          <div class="counts" id="targets-text"></div>
+        </div>
+        <div class="col3" style="margin-top:10px">
+          <div class="bucket">
+            <h4><span data-i18n="units_label">Units</span> <span class="counts" id="count-units"></span></h4>
+            <div id="builder-units" class="scroll list units-list"></div>
+          </div>
+          <div class="bucket">
+            <h4><span data-i18n="knowledge_label">Knowledge</span> <span class="counts" id="count-knowledge"></span></h4>
+            <div id="builder-knowledge" class="scroll list knowledge-list"></div>
+          </div>
+          <div class="bucket">
+            <h4><span data-i18n="prophecies_label">Prophecies</span> <span class="counts" id="count-prophecies"></span></h4>
+            <div id="builder-prophecies" class="scroll list prophecies-list"></div>
+          </div>
+        </div>
+        <!-- Actions below lists, inside same card -->
+        <div id="builder-actions" style="margin-top:16px">
+          <div class="row" style="justify-content:flex-start;gap:8px">
+            <button id="btn-apply" data-i18n="apply">Apply Custom Setup</button>
+            <button id="btn-cancel" class="secondary" data-i18n="cancel">Cancel</button>
+            <div class="muted" id="save-hint" style="align-self:center"></div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Saved setups: shows all saved configurations from localStorage -->
+      <div id="saved-panel" style="display:none; margin-top:16px;">
+        <h3 data-i18n="saved_h">Saved Setups</h3>
+        <div id="saved-list" class="list"></div>
+      </div></section>
+
+    
+  </main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- All logic below is written in plain JavaScript. No external libraries are used. -->
+<script>
+// ===== i18n strings =====
+// All user-facing text is stored here in three languages (English, German, French).
+// We look up the correct string using the current language code in `state.lang`.
+// This makes it easy to translate the interface without touching the logic below.
+
+const STRINGS = {
+  en: {
+    title: "Feud: The Seer's Prophecy Setup",
+    randomize: "Randomize Setup",
+    random_now: "RANDOMIZE NOW!",
+    build: "Custom Setup",
+    save: "Save",
+    language_label: "Language",
+    copy: "Copy",
+    load: "Import",
+    // Hints per tab
+    hint_random: "Generate a fresh setup with one click, or switch to the Custom Builder to design your own.",
+    hint_builder: "Select which cards you want to include in your setup. When you are happy with your choices, press “Apply Custom Setup” to see the result and get a share code.",
+    hint_saved: "Here you can see your saved setups. Tap or click the ▶ button to show more details.",
+    units_h: "Units (12)",
+    knowledge_h: "Knowledge (10)",
+    prophecies_h: "Prophecies (6)",
+    share_label: "Share:",
+    builder_h: "Custom Setup Builder",
+    saved_h: "Saved Setups",
+    units_label: "Units",
+    knowledge_label: "Knowledge",
+    prophecies_label: "Prophecies",
+    targets: (u,k,p) => ``,
+    apply: "Apply Custom Setup",
+    cancel: "Cancel",
+    no_saves: "No saved setups yet.",
+    prompt_name: "Name this setup:",
+    need_setup: "Generate or build a setup first.",
+    code_copied: "Code copied",
+    paste_first: "Paste a code first.",
+    saved_ok: "Setup saved",
+    bad_code: "Could not load code:",
+    imported: "Imported!",
+    units_exact: n => `Units must be exactly ${n} (including fixed).`,
+    knowledge_exact: n => `Knowledge must be exactly ${n}.`,
+    prophecies_exact: n => `Prophecies must be exactly ${n} (including fixed).`,
+    save_hint: "",
+    builder_complete_before_save: "Please complete the custom setup before saving:",
+    load_saved: "Load",
+    copy_saved: "⧉"
+  },
+  de: {
+    title: "Feud: Die Prophezeiung der Seherin – Setup-App",
+    randomize: "Zufälliges Setup",
+    random_now: "JETZT ZUFÄLLIG!",
+    build: "Eigenes Setup",
+    save: "Speichern",
+    language_label: "Sprache",
+    copy: "Kopieren",
+    load: "Importieren",
+    hint_random: "Erzeuge mit einem Klick ein frisches Setup oder wechsle zum Custom-Builder, um dein eigenes zu entwerfen.",
+    hint_builder: "Wähle, welche Karten in deinem Setup enthalten sein sollen. Wenn du zufrieden bist, klicke auf „Setup übernehmen“, um das Ergebnis zu sehen und einen Teil-Code zu erhalten.",
+    hint_saved: "Hier siehst du deine gespeicherten Setups. Tippe oder klicke auf ▶, um weitere Details anzuzeigen.",
+    units_h: "Einheiten (12)",
+    knowledge_h: "Wissen (10)",
+    prophecies_h: "Prophezeiungen (6)",
+    share_label: "Teilen:",
+    builder_h: "Benutzerdefiniertes Setup",
+    saved_h: "Gespeicherte Setups",
+    units_label: "Einheiten",
+    knowledge_label: "Wissen",
+    prophecies_label: "Prophezeiungen",
+    targets: (u,k,p) => ``,
+    apply: "Setup übernehmen",
+    cancel: "Abbrechen",
+    no_saves: "Noch keine gespeicherten Setups.",
+    prompt_name: "Setup-Name:",
+    need_setup: "Erstelle zuerst ein Setup.",
+    code_copied: "Code kopiert",
+    paste_first: "Bitte zuerst einen Code einfügen.",
+    saved_ok: "Setup gespeichert",
+    bad_code: "Code konnte nicht geladen werden:",
+    imported: "Setup importiert!",
+    units_exact: n => `Einheiten müssen genau ${n} sein (inklusive fixe).`,
+    knowledge_exact: n => `Wissen muss genau ${n} sein.`,
+    prophecies_exact: n => `Prophezeiungen müssen genau ${n} sein (inklusive fixe).`,
+    save_hint: "",
+    builder_complete_before_save: "Bitte vervollständige das Custom-Setup vor dem Speichern:",
+    load_saved: "Laden",
+    copy_saved: "⧉"
+  },
+  fr: {
+    title: "Feud : La Prophétie de la Voyante — Application de Setup",
+    randomize: "Générer un setup",
+    random_now: "GÉNÉRER MAINTENANT !",
+    build: "Setup personnalisé",
+    save: "Enregistrer",
+    language_label: "Langue",
+    copy: "Copier",
+    load: "Importer",
+    hint_random: "Générez un nouveau setup en un clic, ou passez au créateur personnalisé pour concevoir le vôtre.",
+    hint_builder: "Sélectionnez les cartes que vous voulez inclure dans votre setup. Une fois satisfait, cliquez sur « Appliquer le setup » pour voir le résultat et obtenir un code de partage.",
+    hint_saved: "Vous voyez ici vos setups enregistrés. Touchez ou cliquez sur ▶ pour afficher plus de détails.",
+    units_h: "Unités (12)",
+    knowledge_h: "Connaissances (10)",
+    prophecies_h: "Prophéties (6)",
+    share_label: "Partager :",
+    builder_h: "Créateur de setup",
+    saved_h: "Setups enregistrés",
+    units_label: "Unités",
+    knowledge_label: "Connaissances",
+    prophecies_label: "Prophéties",
+    targets: (u,k,p) => ``,
+    apply: "Appliquer le setup",
+    cancel: "Annuler",
+    no_saves: "Aucun setup enregistré.",
+    prompt_name: "Nom du setup :",
+    need_setup: "Générez ou créez d’abord un setup.",
+    code_copied: "Code copié",
+    paste_first: "Collez d’abord un code.",
+    saved_ok: "Setup enregistré",
+    bad_code: "Impossible de charger le code :",
+    imported: "Setup importé !",
+    units_exact: n => `Les unités doivent être exactement ${n} (y compris fixes).`,
+    knowledge_exact: n => `Les connaissances doivent être exactement ${n}.`,
+    prophecies_exact: n => `Les prophéties doivent être exactement ${n} (y compris fixes).`,
+    save_hint: "",
+    builder_complete_before_save: "Veuillez terminer le setup personnalisé avant de l’enregistrer :",
+    load_saved: "Charger",
+    copy_saved: "⧉"
+  }
+};
+
+
+function updateHint(active){
+  const S = STRINGS[state.lang] || STRINGS.en;
+  const el = document.getElementById('hint');
+  if (!el || !S) return;
+  if (active === 'builder') {
+    el.textContent = S.hint_builder;
+  } else if (active === 'saved') {
+    el.textContent = S.hint_saved;
+  } else {
+    el.textContent = S.hint_random;
+  }
+}
+
+function setLocale(lang){
+  state.lang = lang;
+  const S = STRINGS[lang] || STRINGS.en;
+
+  // Simple text replacements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (S[key]) el.textContent = S[key];
+  });
+
+  // Targets summary in builder header
+  const targetsEl = document.getElementById('targets-text');
+  if (targetsEl && S.targets) {
+    targetsEl.textContent = S.targets(TARGET.units, TARGET.knowledge, TARGET.prophecies);
+  }
+
+  // Share code placeholder by language
+  const placeholderMap = {
+    en: 'Share code (e.g. 00X1TZ-09B-2LG7Z)',
+    de: 'Teile-Code (z. B. 00X1TZ-09B-2LG7Z)',
+    fr: 'Code de partage (ex. 00X1TZ-09B-2LG7Z)'
+  };
+  const shareInput = document.getElementById('share-code');
+  const importPlaceholderMap = {
+    en: 'Import code here',
+    de: 'Code hier importieren',
+    fr: 'Importez le code ici'
+  };
+  if (shareInput) {
+    if (state.tab === 'builder') {
+      // In Custom Setup tab, this field is used purely for importing a code
+      shareInput.placeholder = importPlaceholderMap[lang] || importPlaceholderMap.en;
+    } else {
+      shareInput.placeholder = placeholderMap[lang] || placeholderMap.en;
+    }
+  }
+
+  // Builder save hint
+  const saveHintEl = document.getElementById('save-hint');
+  if (saveHintEl && S.save_hint) {
+    saveHintEl.textContent = S.save_hint;
+  }
+
+  // Tab-specific hint line
+  updateHint(state.tab || 'random');
+
+  // Re-render with new language
+  if (state.current) render();
+  if (isBuilderOpen()) populateBuilderLists();
+  if (state.tab === 'saved') renderSaved();
+
+  // Refresh dynamic controls (Save / Saved Setups label, placeholders, etc.)
+  setTab(state.tab || 'random');
+}
+
+// ===== Pools & constants =====
+// These objects describe the game content in a code-friendly way:
+// - POOLS: all IDs for Units, Prophecies and Knowledge cards
+// - FIXED: which cards are always included (e.g. starting units)
+// - TARGET: how many cards of each type are required in a valid setup
+// - VARIANT: the non-fixed cards we can randomize
+// - CODE_LEN: how long each part of the share code should be
+const POOLS={
+  units:Array.from({length:32},(_,i)=>`U${String(i+1).padStart(2,'0')}`),
+  prophecies:Array.from({length:14},(_,i)=>`P${String(i+1).padStart(2,'0')}`),
+  knowledge:Array.from({length:22},(_,i)=>`K${String(i+1).padStart(2,'0')}`)
+};
+const FIXED={units:new Set(["U01","U02","U30"]),prophecies:new Set(["P02","P10"]),knowledge:new Set()};
+const TARGET={units:12,prophecies:6,knowledge:10};
+const VARIANT={
+  units:POOLS.units.filter(x=>!FIXED.units.has(x)),
+  prophecies:POOLS.prophecies.filter(x=>!FIXED.prophecies.has(x)),
+  knowledge:POOLS.knowledge.slice()
+};
+const CODE_LEN={units:6,prophecies:3,knowledge:5};
+
+// ===== Embedded names =====
+// This maps internal IDs (U01, P03, K10, ...) to their card names in each language.
+// When we render a card, we combine the ID (for clarity) with the translated name.
+const NAMES={
+  U01:{en:'Villager',de:'Dorfbewohner',fr:'Villageois'}, U02:{en:'Félagi',de:'Mitstreiter',fr:'Félagi'}, U03:{en:'Infiltrator',de:'Eindringling',fr:'Infiltrateur'}, U04:{en:'Shieldbringer',de:'Schildbringer',fr:'Porte-bouclier'}, U05:{en:'Militia',de:'Fußsoldat',fr:'Milice'}, U06:{en:'Herbal Adept',de:'Kräutermeisterin',fr:'Adepte des plantes'}, U07:{en:"Búri's Descendants",de:'Buris Nachkommen',fr:'Descendants de Búri'}, U08:{en:'Witch',de:'Hexe',fr:'Sorcière'}, U09:{en:'Acolyte of Skuld',de:'Anhänger von Skuld',fr:'Acolyte de Skuld'}, U10:{en:'Berserker',de:'Berserkerin',fr:'Berserker'}, U11:{en:'Marauder',de:'Plünderer',fr:'Maraudeur'}, U12:{en:'Vengeful Soul',de:'Rachsüchtige Seele',fr:'Âme vengeresse'}, U13:{en:'Harii Lurker',de:'Harii-Pirscher',fr:'Rôdeur Harii'}, U14:{en:'Longbowman',de:'Langbogenschütze',fr:'Maître archer'}, U15:{en:'Thief',de:'Dieb',fr:'Voleur'}, U16:{en:'Sangr',de:'Feuermagierin',fr:'Sangr'}, U17:{en:'Swordsman',de:'Schwertkämpfer',fr:'Épéiste'}, U18:{en:'Shield Wall',de:'Schildwall',fr:'Mur de boucliers'}, U19:{en:'Spearman',de:'Lanzenträger',fr:'Lancier'}, U20:{en:"Mímir's Follower",de:'Anhänger von Mirmir',fr:'Disciple de Mímir'}, U21:{en:'Raider',de:'Räuber',fr:'Pillard'}, U22:{en:'Völva',de:'Wahrsagerin',fr:'Völva'}, U23:{en:'Maceman',de:'Streitkolbenkämpfer',fr:'Homme avec une masse'}, U24:{en:'Gefn',de:'Freya',fr:'Gefn'}, U25:{en:'Merchant',de:'Händler',fr:'Marchand'}, U26:{en:'Archer',de:'Bogenschütze',fr:'Archer'}, U27:{en:'Harii Warrior',de:'Harii-Krieger',fr:'Guerrier Harii'}, U28:{en:'Húskarl Lucarus',de:'Huscarl-Leibwache',fr:'Húskarl Lucarus'}, U29:{en:'Heartener',de:'Kriegshornbläser',fr:'Porte-bonheur'}, U30:{en:'Norseman',de:'Streitaxtkämpfer',fr:'Homme du Nord'}, U31:{en:'Recruiter',de:'Anwerber',fr:'Recruteur'}, U32:{en:'Ironside Warrior',de:'Eiserner Krieger',fr:'Guerrier de Fer'},
+  P01:{en:'Sacrifice an Eye',de:'Auge opfern',fr:'Sacrifier un œil'}, P02:{en:'Blót',de:'Blutopfer',fr:'Blót (Sacrifice)'}, P03:{en:'Medicine',de:'Heilmittel',fr:'Médicament'}, P04:{en:'Upheaval',de:'Aufruhr',fr:'Bouleversement'}, P05:{en:'Laceration',de:'Fleischwunde',fr:'Lacération'}, P06:{en:'Shieldbreak',de:'Durchbruch',fr:'Brise-bouclier'}, P07:{en:'Courage',de:'Wagemut',fr:'Courage'}, P08:{en:'Kill the Messenger',de:'Den Boten töten',fr:'Tuer le messager'}, P09:{en:'Chosen by Valkyries',de:'Auserwählt von Walküren',fr:'Choisi par les Walkyries'}, P10:{en:'Smite',de:'Zerschmettern',fr:'Frapper'}, P11:{en:'Wroth',de:'Zorn',fr:'Courroux'}, P12:{en:'Fight for Honor',de:'Für die Ehre!',fr:"Combattre pour l'honneur"}, P13:{en:'Breath of Eir',de:'Eirs Atem',fr:"Souffle d'Eir"}, P14:{en:"Hel's Calling",de:'Hels Ruf',fr:"L'appel de Hel"},
+  K01:{en:'Choke Point',de:'Verteidigungsstellung',fr:'Point de blocage'}, K02:{en:'Counterstrike',de:'Gegenangriff',fr:'Contre-attaque'}, K03:{en:'Longhouse',de:'Langhaus',fr:'Maison longue'}, K04:{en:'Warhorn',de:'Kriegshorn',fr:'Cor de guerre'}, K05:{en:'Art of War',de:'Kriegskunst',fr:'Art de la guerre'}, K06:{en:'Bounty',de:'Belohnung',fr:'Prime'}, K07:{en:'Now We Feast!',de:'Festmahl',fr:'Maintenant nous festoyons !'}, K08:{en:'Spiritual Transcendence',de:'Geistige Transcendance',fr:'Transcendance spirituelle'}, K09:{en:'Anticipation',de:'Vorahnung',fr:'Anticipation'}, K10:{en:'Archery',de:'Bogenschießen',fr:"Tir à l'arc"}, K11:{en:'Marked Prey',de:'Gebrandmarkt',fr:'Proie marquée'}, K12:{en:'Rune Inscription',de:'Runeninschrift',fr:'Inscription runique'}, K13:{en:'Seiðr',de:'Magie',fr:'Seiðr'}, K14:{en:'Battle Knife',de:'Messer',fr:'Couteau de combat'}, K15:{en:'Innkeeping',de:'Gasthaus',fr:'Auberge'}, K16:{en:"Nanna´s Anguish",de:'Nannas Leid',fr:"L'angoisse de Nanna"}, K17:{en:'Vanguard',de:'Späher',fr:'Avant-garde'}, K18:{en:'Plague',de:'Seuche',fr:'Peste'}, K19:{en:'Poison',de:'Gift',fr:'Poison'}, K20:{en:'Ards',de:'Pflug',fr:'Ards'}, K21:{en:'Corrupt Þing',de:'Verschwörung Þing',fr:'Þing corrompu'}, K22:{en:'Fortified Walls',de:'Verstärkte Palisade',fr:'Murs fortifiés'}
+};
+
+// ===== Helpers =====
+// A small set of utility functions used in many places below.
+const $=s=>document.querySelector(s);
+const state={lang:'en',current:null,tab:'random'};
+let lastRendered={units:[],knowledge:[],prophecies:[]};
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]))}
+function formatEntry(id){
+  const name = (NAMES[id] && NAMES[id][state.lang]) || id;
+  // Render in two lines for readability in Saved Setups:
+  //  - Line 1: ID (and colon)
+  //  - Line 2: Name (muted)
+  // Wrap both lines in a single child to avoid horizontal flex layout from .pill
+  return `
+    <span class="pill">
+      <div>
+        <div class="unit-header">
+          <b class="id">${id}</b>
+          <span class="colon">:</span>
+        </div>
+        <div class="unit-name muted">${escapeHtml(name)}</div>
+      </div>
+    </span>
+  `;
+}
+function shufflePick(arr,n){const pool=arr.slice();const out=[];while(out.length<n){const i=crypto.getRandomValues(new Uint32Array(1))[0]%pool.length;out.push(pool[i]);pool.splice(i,1)}return out}
+
+// ===== Share code =====
+// The functions in this block generate and read a compact 'share code'.
+// The idea: instead of saving every ID separately, we pack selected cards
+// into a base36 string (letters+numbers) and format it like: 00X1TZ-09B-2LG7Z.
+// - encodeMask / decodeMask: turn selected IDs into a bit-mask and back
+// - composeShareCode: merge the three parts (units / prophecies / knowledge)
+// - parseShareCode: split the code back into those three parts
+function encodeMask(ids,pool){let mask=0n;for(let i=0;i<pool.length;i++){if(ids.includes(pool[i])) mask|=(1n<<BigInt(i))}return mask.toString(36)}
+function padLeft(s,len){return s.length>=len?s:'0'.repeat(len-s.length)+s}
+function base36ToBigInt(str){let v=0n;for(const ch of str.toLowerCase()){const d=parseInt(ch,36);if(Number.isNaN(d)) throw new Error('Bad base36');v=v*36n+BigInt(d)}return v}
+function decodeMask(code,pool){const mask=base36ToBigInt(code);const chosen=[];for(let i=0;i<pool.length;i++){if((mask>>BigInt(i))&1n) chosen.push(pool[i])}return chosen}
+function composeShareCode(parts){return `${padLeft(parts.units,CODE_LEN.units)}-${padLeft(parts.prophecies,CODE_LEN.prophecies)}-${padLeft(parts.knowledge,CODE_LEN.knowledge)}`.toUpperCase()}
+function parseShareCode(code){const parts=code.trim().toLowerCase().split('-');if(parts.length!==3) throw new Error('Invalid code format');const bad=/[^0-9a-z]/i;if(parts.some(p=>bad.test(p))) throw new Error('Invalid code format');return {units:parts[0],prophecies:parts[1],knowledge:parts[2]}}
+
+// ===== UI State (tabs) =====
+// The app has three main 'tabs':
+// 1) random  - shows the randomizer result
+// 2) builder - shows the Custom Setup Builder
+// 3) saved   - shows your saved setups from localStorage
+// `setTab` is responsible for:
+// - updating which tab button looks active
+// - showing/hiding the correct panels
+// - adjusting buttons (e.g. Save vs Saved Setups)
+// - updating the hint text at the bottom
+function isBuilderOpen(){ return $('#builder').style.display==='block'; }
+function setTab(active){
+  state.tab = active;
+  const mainCard = $('main.wrap.grid > section.card:first-of-type');
+  const randomBtn=$('#btn-random');
+  const builderBtn=$('#btn-builder');
+  const saveBtn=$('#btn-save');
+  const savedBtn=$('#btn-saved');
+  const results=$('#results');
+  const builder=$('#builder');
+  
+  const randomNowRow=$('#random-now-row');const savedPanel=$('#saved-panel');
+
+  if(active==='random'){
+    mainCard.classList.remove('custom-setup');
+    document.body.classList.remove('builder-open');
+    randomBtn.classList.add('active');
+    builderBtn.classList.remove('active');
+    if(savedBtn) savedBtn.classList.remove('active');
+    if(saveBtn) saveBtn.disabled=false;
+    if(builder) builder.style.display='none';
+    if(savedPanel) savedPanel.style.display='none';
+    closeBuilder();
+    if(results && state.current) results.style.display='';
+    if(randomNowRow) randomNowRow.style.display='block';
+  } else if(active==='builder'){
+    mainCard.classList.add('custom-setup');
+    if(randomNowRow) randomNowRow.style.display='none';
+    document.body.classList.add('builder-open');
+    randomBtn.classList.remove('active');
+    builderBtn.classList.add('active');
+    if(savedBtn) savedBtn.classList.remove('active');
+    if(saveBtn) saveBtn.disabled=false; // we allow Star while building, but logic in saveCurrent checks validity
+    if(results) results.style.display='none';
+    if(savedPanel) savedPanel.style.display='none';
+    if(builder) builder.style.display='block';
+  } else if(active==='saved'){
+    mainCard.classList.remove('custom-setup');
+    if(randomNowRow) randomNowRow.style.display='none';
+    document.body.classList.remove('builder-open');
+    randomBtn.classList.remove('active');
+    builderBtn.classList.remove('active');
+    if(savedBtn) savedBtn.classList.add('active');
+    if(saveBtn) saveBtn.disabled=true;
+    if(results) results.style.display='none';
+    if(builder) builder.style.display='none';
+    if(savedPanel) savedPanel.style.display='block';
+  } else {
+    mainCard.classList.remove('custom-setup');
+    document.body.classList.remove('builder-open');
+    randomBtn.classList.remove('active');
+    builderBtn.classList.remove('active');
+    if(savedBtn) savedBtn.classList.remove('active');
+    if(saveBtn) saveBtn.disabled=false;
+  }
+  // Top share-code input & copy button behavior per tab
+  const shareInput = document.getElementById('share-code');
+  const copyTop = document.getElementById('btn-copy');
+  if (shareInput) {
+    if (active === 'saved') {
+      // On Saved tab we hide the entire share-code row controls
+      shareInput.style.display = 'none';
+    } else {
+      shareInput.style.display = '';
+    }
+  }
+  if (copyTop) {
+    if (active === 'builder' || active === 'saved') {
+      // No top-level Copy in Custom Setup or Saved list
+      copyTop.style.display = 'none';
+    } else {
+      copyTop.style.display = '';
+    }
+  }
+  if (shareInput && active !== 'builder' && active !== 'saved') {
+    const placeholderMap = {
+      en: 'Share code (e.g. 00X1TZ-09B-2LG7Z)',
+      de: 'Teile-Code (z. B. 00X1TZ-09B-2LG7Z)',
+      fr: 'Code de partage (ex. 00X1TZ-09B-2LG7Z)'
+    };
+    const lang = state.lang || 'en';
+    shareInput.placeholder = placeholderMap[lang] || placeholderMap.en;
+  }
+  if (shareInput && active === 'builder') {
+    // In Custom Setup we repurpose the field purely for importing.
+    const importPlaceholderMap = {
+      en: 'Import code here',
+      de: 'Code hier importieren',
+      fr: 'Importez le code ici'
+    };
+    const lang = state.lang || 'en';
+    shareInput.value = '';
+    shareInput.placeholder = importPlaceholderMap[lang] || importPlaceholderMap.en;
+  }
+
+  // Dynamic Save button behavior depending on active tab
+  const dynSaveBtn = document.getElementById('btn-save');
+  if (dynSaveBtn) {
+    if (active === 'saved') {
+      // Hide Save button entirely on Saved tab
+      dynSaveBtn.style.display = 'none';
+    } else if (active === 'builder') {
+      dynSaveBtn.style.display = '';
+      dynSaveBtn.textContent = (STRINGS[state.lang] && STRINGS[state.lang].saved_h) || 'Saved Setups';
+      dynSaveBtn.onclick = () => { setTab('saved'); renderSaved(); };
+    } else {
+      dynSaveBtn.style.display = '';
+      dynSaveBtn.textContent = STRINGS[state.lang].save || 'Save';
+      dynSaveBtn.onclick = () => { saveCurrent(); toggleStarVisual(); };
+    }
+  }
+
+  // Hide Import button on Randomize and Saved tabs
+  const importBtn = document.getElementById('btn-load');
+  if (importBtn) {
+    if (active === 'random' || active === 'saved') {
+      importBtn.style.display = 'none';
+    } else {
+      importBtn.style.display = '';
+    }
+  }
+
+  updateHint(active);
+}
+
+
+// ===== Generate / load / render =====
+// These functions handle the creation of setups and how they are shown:
+//
+// - generateSetup(): creates a new random setup using the constraints in TARGET.
+// - render(prev): draws the three lists (Units / Knowledge / Prophecies) in the UI,
+//   and also fills the share code fields.
+//
+// We also pass in the previous setup so we can animate only changed entries.
+function generateSetup(){
+  setTab('random');
+
+  // snapshot previous lists to compare for per-entry animation
+  const prev = state.current ? {
+    units: state.current.units.slice(),
+    knowledge: state.current.knowledge.slice(),
+    prophecies: state.current.prophecies.slice()
+  } : null;
+
+  const fixedUnits=[...FIXED.units];
+  const unitsPick=shufflePick(VARIANT.units,TARGET.units-fixedUnits.length);
+  const units=[...fixedUnits,...unitsPick].sort();
+  const fixedP=[...FIXED.prophecies];
+  const propPick=shufflePick(VARIANT.prophecies,TARGET.prophecies-fixedP.length);
+  const prophecies=[...fixedP,...propPick].sort();
+  const knowledge=shufflePick(VARIANT.knowledge,TARGET.knowledge).sort();
+  const code=composeShareCode({
+    units:encodeMask(unitsPick,VARIANT.units),
+    prophecies:encodeMask(propPick,VARIANT.prophecies),
+    knowledge:encodeMask(knowledge,VARIANT.knowledge)
+  });
+
+  state.current={units,knowledge,prophecies,code};
+  render(prev);
+}
+
+
+
+function render(prev){
+  const has = !!state.current;
+  const resultsEl = $('#results');
+
+  // Only show randomized results if we are on the Random tab
+  if (state.tab === 'random' && has) {
+    resultsEl.style.display = '';
+  } else {
+    resultsEl.style.display = 'none';
+  }
+
+  if (!has) return;
+
+  const { units, knowledge, prophecies, code } = state.current;
+  const lang = state.lang;
+
+  // helper to render one list and only animate entries that changed
+  
+function renderList(containerSelector, items, prevItems){
+    const container = $(containerSelector);
+    const prevArr = prevItems || [];
+    container.innerHTML = items.map((id, index)=>{
+      const name = (NAMES[id] && NAMES[id][lang]) || id;
+      const changed = !prevArr.length || prevArr[index] !== id;
+      const fadeClass = changed ? ' fade-anim' : '';
+      // Two-line layout (like builder/saved):
+      //  - Line 1: ID and colon
+      //  - Line 2: Name
+      return `
+        <span class="pill">
+          <div class="rand-setup">
+            <div class="unit-header">
+              <b class="id${fadeClass}">${id}</b>
+              <span class="colon">:</span>
+            </div>
+            <div class="unit-name muted${fadeClass}">${escapeHtml(name)}</div>
+          </div>
+        </span>
+      `;
+    }).join('');
+  }
+
+  renderList('#units-list', units, prev && prev.units);
+  renderList('#knowledge-list', knowledge, prev && prev.knowledge);
+  renderList('#prophecies-list', prophecies, prev && prev.prophecies);
+
+  // remember last rendered values for next comparison
+  lastRendered = {
+    units: units.slice(),
+    knowledge: knowledge.slice(),
+    prophecies: prophecies.slice()
+  };
+
+  $('#share-out').textContent = code;
+  $('#share-code').value = code;
+}
+// ===== Saved setups =====
+// We store saved setups in the browser's localStorage under the key LS_KEY.
+// Each saved entry contains:
+// - a unique id
+// - timestamp (ts)
+// - name (given by the user)
+// - language used when saved (lang)
+// - the 3 card lists + share code
+//
+// - listSaved(): read and parse from localStorage
+// - saveList(a): write an updated array back
+// - saveCurrent(): validate (if builder), then prompt for a name and save
+// - renderSaved(): draw the list of saved setups and their card contents
+const LS_KEY='feud_setups_v5';
+function listSaved(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]')}catch{return []}}
+function saveList(a){localStorage.setItem(LS_KEY,JSON.stringify(a))}
+function saveCurrent(){
+  const S=STRINGS[state.lang];
+  // If builder is open, validate counts first; if OK, auto-apply
+  if (isBuilderOpen()) {
+    const u = document.querySelectorAll('#builder-units input:checked').length;
+    const k = document.querySelectorAll('#builder-knowledge input:checked').length;
+    const p = document.querySelectorAll('#builder-prophecies input:checked').length;
+    const problems = [];
+    if (u !== TARGET.units) problems.push(`• ${S.units_label}: ${u}/${TARGET.units}`);
+    if (k !== TARGET.knowledge) problems.push(`• ${S.knowledge_label}: ${k}/${TARGET.knowledge}`);
+    if (p !== TARGET.prophecies) problems.push(`• ${S.prophecies_label}: ${p}/${TARGET.prophecies}`);
+    if (problems.length) { alert(S.builder_complete_before_save+"\n"+problems.join('\n')); return; }
+    applyCustom(true); // silent apply for save
+  }
+  if(!state.current) return alert(S.need_setup);
+  const nameRaw=prompt(S.prompt_name,'');
+  if (nameRaw===null) return;
+  const name=nameRaw.trim();
+  const entry={id:crypto.randomUUID(),ts:Date.now(),name,lang:state.lang,...state.current};
+  const arr=listSaved(); arr.unshift(entry); saveList(arr); renderSaved(); showToastMessage(S.saved_ok || 'Saved!');
+}
+function renderSaved(){
+  const S=STRINGS[state.lang];
+  const arr=listSaved();
+  const c=$('#saved-list');
+  c.innerHTML = arr.length ? '' : `<div class="muted">${S.no_saves}</div>`;
+  for(const s of arr){
+    const el=document.createElement('div');
+    el.className='saved-item';
+    const dateStr = new Date(s.ts || s.time || Date.now()).toLocaleDateString();
+
+    const unitsHtml = (Array.isArray(s.units) ? s.units : []).map(id => formatEntry(id)).join('');
+    const knowledgeHtml = (Array.isArray(s.knowledge) ? s.knowledge : []).map(id => formatEntry(id)).join('');
+    const propheciesHtml = (Array.isArray(s.prophecies) ? s.prophecies : []).map(id => formatEntry(id)).join('');
+
+    el.innerHTML = `<div class="saved-line">
+      <span class="saved-name" title="${escapeHtml(s.name || '(unnamed)')}">${escapeHtml(s.name || '(unnamed)')}</span><!-- Full name tooltip added -->
+      <span class="saved-date">${dateStr}</span>
+      <div class="saved-actions">
+        <button data-act="toggle" class="secondary saved-toggle">▶</button>
+        <button data-act="copy" class="secondary">${escapeHtml(S.copy_saved || 'Copy Code')}</button>
+        <button data-act="del" class="secondary">✕</button>
+      </div>
+    </div>
+    <div class="saved-cards">
+      <div class="saved-section">
+        <h4 class="saved-section-title">${escapeHtml(S.units_h)}</h4>
+        <div class="list units-list">${unitsHtml}</div>
+      </div>
+      <div class="saved-section">
+        <h4 class="saved-section-title">${escapeHtml(S.knowledge_h)}</h4>
+        <div class="list knowledge-list">${knowledgeHtml}</div>
+      </div>
+      <div class="saved-section">
+        <h4 class="saved-section-title">${escapeHtml(S.prophecies_h)}</h4>
+        <div class="list prophecies-list">${propheciesHtml}</div>
+      </div>
+    </div>`;
+
+        const cards = el.querySelector('.saved-cards');
+    if (cards) {
+      cards.style.display = 'none';
+      cards.style.marginTop = '0';
+    }
+
+    const toggleBtn = el.querySelector('[data-act="toggle"]');
+    if (toggleBtn && cards) {
+      toggleBtn.onclick = () => {
+        const isHidden = cards.style.display === 'none';
+        if (isHidden) {
+          cards.style.display = '';
+          cards.style.marginTop = '8px';
+          toggleBtn.textContent = '▼';
+        } else {
+          cards.style.display = 'none';
+          cards.style.marginTop = '0';
+          toggleBtn.textContent = '▶';
+        }
+      };
+    }
+
+const copyBtn = el.querySelector('[data-act="copy"]');
+    if (copyBtn) {
+      copyBtn.onclick = () => {
+        if (!s.code) return;
+        copyToClipboard(s.code).then(() => {
+          if (typeof showToastMessage === 'function') {
+            const S2 = STRINGS[state.lang] || {};
+            showToastMessage(S2.code_copied || 'Code copied');
+          }
+        });
+      };
+    }
+    el.querySelector('[data-act="del"]').onclick=()=>{
+      const labelName = (s.name && s.name.trim()) ? s.name.trim() : (S.saved_h || 'this setup');
+      if (!confirm(`Are you sure you want to delete "${labelName}"?`)) return;
+      saveList(listSaved().filter(x=>x.id!==s.id)); renderSaved();
+    };
+    c.appendChild(el);
+  }
+  updateHint(state.tab || 'random');
+}
+
+
+// ===== Custom Builder =====
+// The Custom Setup Builder lets the user pick exact cards for each category.
+// It works like this:
+// - populateBuilderLists(): builds the checkbox lists for Units/Knowledge/Prophecies.
+//   Fixed cards are pre-checked and disabled.
+// - enforceLimit(): prevents selecting more than the target number for that type.
+// - updateCounts(): shows live counts like (3/12) next to each header.
+// - applyCustom(silent): checks that all counts are correct and then builds
+//   a `state.current` setup and share code from the user's choices.
+//
+// There is also a small 'toast' bubble at the bottom that shows quick feedback,
+// e.g. "Units: 4/12" when you select one more unit.
+let toastTimer=null;
+function showToast(label,count,total){
+  const el=document.getElementById('toast');
+  if(!el) return; el.textContent=`${label}: ${count}/${total}`;
+  el.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{ el.classList.remove('show'); }, 900);
+}
+
+function showToastMessage(message){
+  const el=document.getElementById('toast');
+  if(!el) return;
+  el.textContent=message;
+  el.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{ el.classList.remove('show'); }, 900);
+}
+
+function copyToClipboard(text){
+  function fallback(){
+    return new Promise((resolve,reject)=>{
+      const ta=document.createElement('textarea');
+      ta.value=text;
+      ta.style.position='fixed';
+      ta.style.top='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try{
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        resolve();
+      }catch(e){
+        document.body.removeChild(ta);
+        reject(e);
+      }
+    });
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text).catch(()=>fallback());
+  }
+  return fallback();
+}
+
+
+function buildCheckbox(id, disabled) {
+  const name = (NAMES[id] && NAMES[id][state.lang]) || id;
+  
+  // This new structure uses two child containers:
+  // 1. "unit-header" for the checkbox, ID, and colon.
+  // 2. "unit-name" for the (potentially long) text name.
+  
+  return `
+    <label class="opt pill">
+      <div class="unit-header">
+        <input type="checkbox" value="${id}" ${disabled ? 'checked disabled' : ''}>
+        <b class="id">${id}</b>
+        <span class="colon">:</span>
+      </div>
+      <div class="unit-name muted">
+        ${escapeHtml(name)}
+      </div>
+    </label>
+  `;
+  // Note: I moved the "muted" class to the unit-name div
+}
+function populateBuilderLists(){
+  const uC=$('#builder-units'), kC=$('#builder-knowledge'), pC=$('#builder-prophecies');
+  uC.innerHTML = POOLS.units.map(id=> buildCheckbox(id, FIXED.units.has(id))).join('');
+  kC.innerHTML = POOLS.knowledge.map(id=> buildCheckbox(id,false)).join('');
+  pC.innerHTML = POOLS.prophecies.map(id=> buildCheckbox(id, FIXED.prophecies.has(id))).join('');
+  // bind change with feedback toast
+  uC.querySelectorAll('input').forEach(cb=> cb.onchange=()=>{ const added=cb.checked; enforceLimit(uC,TARGET.units); updateCounts(); if(added){ const c=uC.querySelectorAll('input:checked').length; showToast(STRINGS[state.lang].units_label, c, TARGET.units);} });
+  kC.querySelectorAll('input').forEach(cb=> cb.onchange=()=>{ const added=cb.checked; enforceLimit(kC,TARGET.knowledge); updateCounts(); if(added){ const c=kC.querySelectorAll('input:checked').length; showToast(STRINGS[state.lang].knowledge_label, c, TARGET.knowledge);} });
+  pC.querySelectorAll('input').forEach(cb=> cb.onchange=()=>{ const added=cb.checked; enforceLimit(pC,TARGET.prophecies); updateCounts(); if(added){ const c=pC.querySelectorAll('input:checked').length; showToast(STRINGS[state.lang].prophecies_label, c, TARGET.prophecies);} });
+  updateCounts();
+}
+function openBuilder(){
+  $('#results').style.display='none';
+  setTab('builder');
+  populateBuilderLists();
+}
+function closeBuilder(){
+  $('#builder').style.display='none';
+  const builderBtn=$('#btn-builder'); if(builderBtn) builderBtn.disabled=false;
+}
+function isOverLimit(container,target){ return container.querySelectorAll('input:checked').length>target; }
+function enforceLimit(container,target){ if(isOverLimit(container,target)){ const last=[...container.querySelectorAll('input:checked')].reverse().find(cb=>!cb.disabled); if(last) last.checked=false; } updateCounts(); }
+function updateCounts(){
+  $('#count-units').textContent = `(${document.querySelectorAll('#builder-units input:checked').length}/${TARGET.units})`;
+  $('#count-knowledge').textContent = `(${document.querySelectorAll('#builder-knowledge input:checked').length}/${TARGET.knowledge})`;
+  $('#count-prophecies').textContent = `(${document.querySelectorAll('#builder-prophecies input:checked').length}/${TARGET.prophecies})`;
+}
+function applyCustom(silent){
+  const S=STRINGS[state.lang];
+  const uSel=[...document.querySelectorAll('#builder-units input:checked')].map(cb=>cb.value);
+  const kSel=[...document.querySelectorAll('#builder-knowledge input:checked')].map(cb=>cb.value);
+  const pSel=[...document.querySelectorAll('#builder-prophecies input:checked')].map(cb=>cb.value);
+  if(uSel.length!==TARGET.units){ if(!silent) alert(S.units_exact(TARGET.units)); return; }
+  if(kSel.length!==TARGET.knowledge){ if(!silent) alert(S.knowledge_exact(TARGET.knowledge)); return; }
+  if(pSel.length!==TARGET.prophecies){ if(!silent) alert(S.prophecies_exact(TARGET.prophecies)); return; }
+  const unitsPick=uSel.filter(id=>!FIXED.units.has(id));
+  const propPick=pSel.filter(id=>!FIXED.prophecies.has(id));
+  const code=composeShareCode({units:encodeMask(unitsPick,VARIANT.units),prophecies:encodeMask(propPick,VARIANT.prophecies),knowledge:encodeMask(kSel,VARIANT.knowledge)});
+  state.current={units:uSel.sort(),knowledge:kSel.sort(),prophecies:pSel.sort(),code};
+  setTab('random'); render();
+}
+
+// ===== Events =====
+// Here we wire up all buttons and inputs to their actions:
+// - Randomize tab button
+// - RANDOMIZE NOW! button
+// - Custom Setup tab button
+// - Saved tab (the star button)
+// - Apply / Cancel in the builder
+// - Copy / Import / language selector
+//
+// This is the main "glue" that connects the HTML to the functions above.
+function updateStarButton(){
+  const btn=$('#btn-save');
+  if(!btn) return;
+  const starred=btn.classList.contains('starred');
+  btn.textContent = starred ? '★' : 'Save';
+}
+function toggleStarVisual(){
+  const btn=$('#btn-save');
+  if(!btn) return;
+  btn.classList.toggle('starred');
+  updateStarButton();
+}
+
+$('#btn-random').onclick=()=>{
+  if($('#btn-random').classList.contains('active')) return;
+  generateSetup();
+  setTab('random');
+};
+$('#btn-random-now').onclick=generateSetup;
+$('#btn-builder').onclick=()=>{ if(!isBuilderOpen()) openBuilder(); };
+const savedTabBtn=$('#btn-saved');
+if(savedTabBtn) savedTabBtn.onclick=()=>{ setTab('saved'); renderSaved(); };
+
+$('#btn-apply').onclick=()=>applyCustom(false);
+$('#btn-cancel').onclick=()=>{ window.scrollTo({top:0, behavior:'smooth'}); setTab('random'); if (state.current) render(); };
+
+$('#btn-copy').onclick=()=>{ const v=$('#share-code').value || (state.current&&state.current.code) || ''; if(!v) return alert(STRINGS[state.lang].paste_first); copyToClipboard(v).then(()=>showToastMessage(STRINGS[state.lang].code_copied)); };
+$('#btn-copy-bottom').onclick=()=>{ const v=$('#share-out').textContent.trim() || (state.current&&state.current.code) || ''; if(!v) return alert(STRINGS[state.lang].paste_first); copyToClipboard(v).then(()=>showToastMessage(STRINGS[state.lang].code_copied)); };
+$('#btn-load').onclick=()=>{ const v=$('#share-code').value.trim(); if(!v) return alert(STRINGS[state.lang].paste_first); try{ loadFromCode(v); }catch(e){ alert(STRINGS[state.lang].bad_code+" "+e.message); } };
+$('#lang').onchange=e=> setLocale(e.target.value);
+
+// ===== Initial setup =====
+// When the page loads we:
+// 1) Set the language to English by default (you can change it in the dropdown)
+// 2) Render any saved setups from localStorage (if there are any)
+// 3) Generate the initial random setup so the app is useful immediately
+//    (you can always randomize again with the big button)
+setLocale('en');
+renderSaved();
+generateSetup();
+
+
+// ===== loadFromCode =====
+// This is used when the user pastes or imports a share code.
+// We:
+// 1) Decode the code back into the three bit-masks
+// 2) Turn those masks into lists of IDs
+// 3) Combine the fixed cards with the variable ones
+// 4) Update state.current and re-render the UI
+// 5) Show a short toast message ("Imported!")
+function loadFromCode(v){
+  setTab('random');
+
+  const prev = state.current ? {
+    units: state.current.units.slice(),
+    knowledge: state.current.knowledge.slice(),
+    prophecies: state.current.prophecies.slice()
+  } : null;
+
+  const segs = parseShareCode(v);
+  const unitsPick = decodeMask(segs.units, VARIANT.units);
+  const propPick = decodeMask(segs.prophecies, VARIANT.prophecies);
+  const knowledge = decodeMask(segs.knowledge, VARIANT.knowledge).sort();
+  const units = [...FIXED.units, ...unitsPick].sort();
+  const prophecies = [...FIXED.prophecies, ...propPick].sort();
+  const code = composeShareCode(segs);
+  state.current = { units, knowledge, prophecies, code };
+  render(prev);
+  if (typeof showToastMessage === 'function') {
+    const S = STRINGS[state.lang] || {};
+    showToastMessage(S.imported || 'Imported!');
+  }
+}
+</script>
+</body>
+</html>
