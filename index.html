@@ -1571,6 +1571,9 @@ function applyCustom(silent){
   const code=composeShareCode({units:encodeMask(unitsPick,VARIANT.units),prophecies:encodeMask(propPick,VARIANT.prophecies),knowledge:encodeMask(kSel,VARIANT.knowledge)});
   state.current={units:uSel.sort(),knowledge:kSel.sort(),prophecies:pSel.sort(),code};
   setTab('random'); render();
+
+    // After applying custom setup, jump to top of page
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ===== Events =====
